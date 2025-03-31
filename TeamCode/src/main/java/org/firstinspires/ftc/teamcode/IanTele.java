@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @TeleOp
@@ -15,11 +16,13 @@ public class IanTele extends LinearOpMode {
         DcMotor backLeftMotor = hardwareMap.dcMotor.get("bL");
         DcMotor frontRightMotor = hardwareMap.dcMotor.get("fR");
         DcMotor backRightMotor = hardwareMap.dcMotor.get("bR");
+        DcMotor slideM = hardwareMap.dcMotor.get("slides");
 
         backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        slideM.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
 
@@ -49,6 +52,17 @@ public class IanTele extends LinearOpMode {
             backLeftMotor.setPower(backLeftPower);
             frontRightMotor.setPower(frontRightPower);
             backRightMotor.setPower(backRightPower);
+
+            if (gamepad1.right_trigger>0) {
+                slideM.setDirection(DcMotorSimple.Direction.FORWARD);
+                slideM.setPower(1*gamepad1.right_trigger);
+            } else if (gamepad1.left_trigger>0) {
+                slideM.setDirection(DcMotorSimple.Direction.REVERSE);
+                slideM.setPower(1*gamepad1.left_trigger);
+            } else {
+                slideM.setPower(0);
+            }
+
         }
     }
 }
